@@ -2,7 +2,6 @@
 from app import app, models, bcrypt, log
 from app.forms import wallet as wallet_forms
 
-from app.cwmodels import Kv
 
 # Import libraries
 import random
@@ -11,6 +10,8 @@ from flask import render_template, jsonify, session, redirect, request, json, fl
 
 from app.toolbox.multisig_wallet import multisig_wallet
 
+# Import Rein-specific libraries
+from app.cwmodels import Kv
 from app.rein.lib.validate import filter_and_parse_valid_sigs
 
 
