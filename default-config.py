@@ -1,4 +1,4 @@
-# DEBUG has to be to False in a production enrironment for security reasons
+# DEBUG has to be to False in a production environment for security reasons
 DEBUG = True
 # BitGo wallet token for IP XX.XXX.XX, dispense an access token at www.bitgo.com and set it here
 ACCESS_TOKEN = ''
@@ -7,7 +7,8 @@ SECRET_KEY = 'houdini'
 # Admin credentials
 ADMIN_CREDENTIALS = ('admin', 'password')
 # Database choice
-SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
+DB_PATH = '/path/to/causeway.db'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DB_PATH
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 # Configuration of a Gmail account for sending mails
 MAIL_SERVER = 'smtp.googlemail.com'
