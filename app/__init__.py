@@ -27,6 +27,18 @@ except:
 from flask.ext.sqlalchemy import SQLAlchemy
 db = SQLAlchemy(app)
 
+# Setup logging
+import logging
+import logging.handlers
+log = logging.getLogger('21FB')
+file_handler = logging.handlers.RotatingFileHandler('21-Flask-Boilerplate.log')
+file_handler.setFormatter(logging.Formatter(
+                                '%(asctime)s %(levelname)s: %(message)s '
+                                '[%(filename)s:%(lineno)d]'
+                         ))
+log.addHandler(file_handler)
+log.setLevel(logging.INFO)
+
 # Setup the mail server
 from flask.ext.mail import Mail
 mail = Mail(app)
