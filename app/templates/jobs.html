@@ -12,7 +12,9 @@
 
       <div id="jobs">
         {% for job in jobs  %}
-          <pre>{{ job['Job name'] }}</pre>
+        <h3>{{ job['Job name'] }}</h3>
+        <p>posted by: {{ job['Job creator'] }}</p>
+        <p>description: {{ job['Description'] }}</p>
             <br /> 
         {% endfor %}  
       </div>
