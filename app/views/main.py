@@ -1,6 +1,8 @@
 # Import app 
-from app import app, models, bcrypt
+from app import app, models, bcrypt, log
 from app.forms import wallet as wallet_forms
+
+from app.cwmodels import Kv
 
 # Import libraries
 import random
@@ -8,6 +10,15 @@ from functools import wraps
 from flask import render_template, jsonify, session, redirect, request, json, flash
 
 from app.toolbox.multisig_wallet import multisig_wallet
+
+from app.rein.lib.validate import filter_and_parse_valid_sigs
+
+
+class LogHolder():
+    def __init__(self, log):
+        self.log = log
+
+config = LogHolder(log)
 
 # Import Marketplace Configs
 market = app.config['MARKET_DATA']
@@ -22,14 +33,32 @@ def login_required(func):
         return func(*args, **kwargs)
     return func_wrapper
 
+
 @app.route('/')
 def index():
     return render_template('index.html', title='Home')
+
+
+@app.route('/jobs')
+def jobs():
+    kvs = Kv.get_jobs()
+    documents = []
+    for kv in kvs:
+        documents.append(kv.value)
+
+    parsed = filter_and_parse_valid_sigs(config, documents)
+    jobs = []
+    for p in parsed:
+        if 'Title' in p and p['Title'] == "Rein Job":
+            jobs.append(p)
+    return render_template('jobs.html', title='Jobs', jobs=jobs) 
+
 
 @app.route('/map')
 @login_required
 def map():
     return render_template('map.html', title='Map')
+
 
 @app.route('/marketplace', methods=['GET', 'POST'])
 @login_required
@@ -59,6 +88,7 @@ def marketplace():
                 flash(tx['message'], 'negative')
             return render_template('marketplace.html', title='Marketplae', address=address, balance=balance, form=form, market=market)
         return render_template('marketplace.html', title='Marketplace', address=address, balance=balance, form=form, market=market)
+
 
 @app.route('/map/refresh', methods=['POST'])
 @login_required

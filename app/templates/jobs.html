@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="ui container">
+      
+      <h1 class="ui header">{{ title }}</h1>
+
+      <div id="jobs">
+        {% for job in jobs  %}
+          <pre>{{ job['Job name'] }}</pre>
+            <br /> 
+        {% endfor %}  
+      </div>
+
+    </div>
+
+{% endblock %}
