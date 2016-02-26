@@ -10,11 +10,15 @@
       
       <h1 class="ui header">{{ title }}</h1>
 
+      <p>This is a listing of jobs this server knows about. Visit <a href="http://reinproject.org">ReinProject.org</a> to setup the software so you can bid on a job, post your own, or download listings.</p>
+
       <div id="jobs">
         {% for job in jobs  %}
         <h3>{{ job['Job name'] }}</h3>
-        <p>posted by: {{ job['Job creator'] }}</p>
-        <p>description: {{ job['Description'] }}</p>
+        <p>By: <b><a href='/address/{{ job['Job creator master address'] }}'>{{ job['Job creator'] }}</a></b> &nbsp; 
+        Master: <a href='/user/{{ job['Job creator master address'] }}'>{{ job['Job creator master address'] }}</a> 
+        </p>
+        <p>Description: {{ job['Description'] }}</p>
             <br /> 
         {% endfor %}  
       </div>

@@ -37,7 +37,8 @@ def login_required(func):
 
 @app.route('/')
 def index():
-    return render_template('index.html', title='Home')
+    return redirect('/jobs')
+    #return render_template('index.html', title='Home')
 
 
 @app.route('/jobs')
