@@ -1,7 +1,8 @@
 # DEBUG has to be to False in a production environment for security reasons
 DEBUG = True
-# Set to 0.0.0.0 to listen on all interfaces (e.g. to serve remote hosts)
+# Set HOST to 0.0.0.0 to listen on all interfaces (e.g. to serve remote hosts)
 HOST = '127.0.0.0'
+PORT = 5000
 # BitGo wallet token for IP XX.XXX.XX, dispense an access token at www.bitgo.com and set it here
 ACCESS_TOKEN = ''
 # Secret key for generating tokens
