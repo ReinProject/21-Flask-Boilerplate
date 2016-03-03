@@ -8,7 +8,7 @@
       <form action="" method=post>
       <div id="jobs">
         {% for job in jobs %}
-        <h3><input type="checkbox" name="do_hide" value="{{ job['Job ID'] }}"> {{ job['Job name'] }}</h3>
+        <h3><input type="checkbox" name="do_hide" value="{{ job['Job ID'] }}" {{ 'checked' if job['visible'] }}> {{ job['Job name'] }}</h3>
         <p>By: <b><a href='/address/{{ job['Job creator master address'] }}'>{{ job['Job creator'] }}</a></b> &nbsp; 
         Master: <a href='/user/{{ job['Job creator master address'] }}'>{{ job['Job creator master address'] }}</a> 
         </p>

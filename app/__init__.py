@@ -88,9 +88,6 @@ class JobView(BaseView):
     @expose('/', methods=('GET', 'POST'))
     def jobs(self):
         to_hide = request.form.getlist("do_hide")
-        if len(to_hide) > 0:
-            for job_id in to_hide:
-                Extra.hide(job_id)
         kvs = Kv.get_jobs()
         documents = []
         for kv in kvs:
@@ -99,7 +96,13 @@ class JobView(BaseView):
         parsed = filter_and_parse_valid_sigs(config, documents)
         jobs = []
         for p in parsed:
-            if 'Title' in p and p['Title'] == "Rein Job" and Extra.isvisible(p['Job ID']):
+            if 'Title' in p and p['Title'] == "Rein Job":
+                if to_hide:
+                    if p['Job ID'] in to_hide:
+                        Extra.hide(p['Job ID'])
+                    else:
+                        Extra.show(p['Job ID'])
+                p['visible'] = not Extra.isvisible(p['Job ID'])
                 jobs.append(p)
         
         return self.render('admin/jobs.html', jobs=jobs) 

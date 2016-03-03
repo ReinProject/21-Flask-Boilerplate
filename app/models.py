@@ -25,6 +25,13 @@ class Extra(db.Model):
         db.session.commit()
 
     @classmethod
+    def show(self, job_id):
+        e = db.session.query(self).filter(self.job_id == job_id).first()
+        if e:
+            e.visible = 1
+        db.session.commit()
+
+    @classmethod
     def isvisible(self, job_id):
         extra = db.session.query(Extra).filter(Extra.job_id == job_id).first()
         if extra and extra.visible == 0:
