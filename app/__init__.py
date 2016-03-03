@@ -72,7 +72,33 @@ from flask.ext.admin.contrib.sqla import ModelView
 from flask.ext.login import LoginManager
 from flask.ext.admin.contrib.fileadmin import FileAdmin
 
-admin = Admin(app, name='Admin', template_mode='bootstrap3')
+admin = Admin(app, name='Spectacle Admin', template_mode='bootstrap3')
+
+# Import Rein-specific libraries
+from app.cwmodels import Kv
+from app.rein.lib.validate import filter_and_parse_valid_sigs
+
+class LogHolder():
+    def __init__(self, log):
+        self.log = log
+
+config = LogHolder(log)
+
+class JobView(BaseView):
+    @expose('/', methods=('GET', 'POST'))
+    def jobs(self):
+        kvs = Kv.get_jobs()
+        documents = []
+        for kv in kvs:
+            documents.append(kv.value)
+
+        parsed = filter_and_parse_valid_sigs(config, documents)
+        jobs = []
+        for p in parsed:
+            if 'Title' in p and p['Title'] == "Rein Job":
+                jobs.append(p)
+        
+        return self.render('admin/jobs.html', jobs=jobs) 
 
 class ModelView(ModelView):
     def is_accessible(self):
@@ -83,5 +109,7 @@ class ModelView(ModelView):
             ))
         return True
 
+
 # Users
 admin.add_view(ModelView(User, db.session))
+admin.add_view(JobView(name='Visible Jobs', endpoint='jobs'))
