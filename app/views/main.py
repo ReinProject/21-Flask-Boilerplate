@@ -51,7 +51,7 @@ def jobs():
     parsed = filter_and_parse_valid_sigs(config, documents)
     jobs = []
     for p in parsed:
-        if 'Title' in p and p['Title'] == "Rein Job":
+        if 'Title' in p and p['Title'] == "Rein Job" and models.Extra.isvisible(p['Job ID']):
             jobs.append(p)
     return render_template('jobs.html', title='Jobs', jobs=jobs) 
 

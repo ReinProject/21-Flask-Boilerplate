@@ -5,16 +5,18 @@
     <div class="ui container">
       
       <p>This is a listing of jobs this server knows about. You can use this admin interface to hide any jobs you wish from the default view. Users will still be able to view all jobs by clicking a link.</p>
-
+      <form action="" method=post>
       <div id="jobs">
         {% for job in jobs %}
-        <h3>{{ job['Job name'] }}</h3>
+        <h3><input type="checkbox" name="do_hide" value="{{ job['Job ID'] }}"> {{ job['Job name'] }}</h3>
         <p>By: <b><a href='/address/{{ job['Job creator master address'] }}'>{{ job['Job creator'] }}</a></b> &nbsp; 
         Master: <a href='/user/{{ job['Job creator master address'] }}'>{{ job['Job creator master address'] }}</a> 
         </p>
         <p>Description: {{ job['Description'] }}</p>
         {% endfor %}  
       </div>
+      <input type="submit">
+      </form>
 
     </div>
 
