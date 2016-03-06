@@ -91,7 +91,8 @@ class JobView(BaseView):
         kvs = Kv.get_jobs()
         documents = []
         for kv in kvs:
-            documents.append(kv.value)
+            if kv.testnet == 0:
+                documents.append(kv.value)
 
         parsed = filter_and_parse_valid_sigs(config, documents)
         jobs = []

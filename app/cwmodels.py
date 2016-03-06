@@ -40,7 +40,12 @@ class Kv(db.Model):
 
     @classmethod
     def get_jobs(self):
-        return self.query.all()
+        kvs = self.query.filter(self.testnet == False).all()
+        jobs = []
+        for r in kvs:
+            if r.value.find('Rein Job'):
+                jobs.append(r)
+        return jobs
 
 class Sale(db.Model):
     __tablename__ = 'sale'

@@ -46,7 +46,8 @@ def jobs():
     kvs = Kv.get_jobs()
     documents = []
     for kv in kvs:
-        documents.append(kv.value)
+        if not kv.testnet:
+            documents.append(kv.value)
 
     parsed = filter_and_parse_valid_sigs(config, documents)
     jobs = []
