@@ -17,7 +17,7 @@
         <h3>{{ job['Job name'] }}</h3>
         <p>By: <b><a href='/address/{{ job['Job creator master address'] }}'>{{ job['Job creator'] }}</a></b> &nbsp; 
         Master: <a href='/user/{{ job['Job creator master address'] }}'>{{ job['Job creator master address'] }}</a> 
-        </p>
+        Job ID: {{ job['Job ID'] }}</p>
         <p>Description: {{ job['Description'] }}</p>
             <br /> 
             <a onClick="alert('This site is read-only. In order to bid, please visit http://reinproject.org and follow the instructions to setup python-rein.')"><button>Bid</button></a>
